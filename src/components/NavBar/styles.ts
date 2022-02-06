@@ -26,6 +26,10 @@ export const Container = styled.header<ContainerProps>`
   `}
 `;
 
+export const Text = styled.span`
+  color: white;
+`;
+
 export const RoutesMenu = styled.div`
   display: flex;
   align-items: center;

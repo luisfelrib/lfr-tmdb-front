@@ -1,11 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { FaCaretDown } from 'react-icons/fa';
-
+import { Link } from 'react-router-dom';
 import LogoNetflix from '../../assets/logo.png';
 
-import { Container, RoutesMenu, Profile } from './styles';
+import { Container, RoutesMenu, Profile, Text } from './styles';
+import * as AuthService from '../../services/auth';
 
+interface User {
+  id: BigInteger;
+  name: string;
+  email: string;
+}
+interface Session {
+  accessToken: string;
+  user: User;
+}
 const NavBar: React.FC = () => {
+  const [currentUser, setCurrentUser] = useState<Session | undefined>(
+    undefined,
+  );
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
+  const logOut = (): void => {
+    AuthService.logout();
+    setCurrentUser(undefined);
+  };
   const [isBlack, setIsBlack] = useState(false);
 
   useEffect(() => {
@@ -24,17 +47,30 @@ const NavBar: React.FC = () => {
       <RoutesMenu>
         <img src={LogoNetflix} alt="dahdjahdkja" />
         <ul>
-          <li style={{ fontWeight: 'bold' }}>Inicio</li>
-          <li>Minha Lista</li>
+          <li style={{ fontWeight: 'bold' }}>
+            <Link to="/">Inicio</Link>
+          </li>
+          {currentUser && (
+            <li>
+              <Link to="/mylist">Minha Lista</Link>
+            </li>
+          )}
         </ul>
       </RoutesMenu>
       <Profile>
         <button type="button">
-          <img
-            src="https://occ-0-761-185.1.nflxso.net/dnm/api/v6/Z-WHgqd_TeJxSuha8aZ5WpyLcX8/AAAABR8DzEDMx6x6rgkSexM2EYh44oQISc8fyEFr6WnraR9_HyniHFDRbXRrElpLThfL9OYFOueAItK7VIEb2xH7AqA.png?r=c71"
-            alt="imagem profile usuario"
-          />
-          <FaCaretDown />
+          {(currentUser && (
+            <>
+              <Text>
+                Olá, <strong>{currentUser.user.name}</strong>
+              </Text>
+              <FaCaretDown />{' '}
+            </>
+          )) || (
+            <strong>
+              <Link to="/login">Entrar</Link>
+            </strong>
+          )}
         </button>
       </Profile>
     </Container>

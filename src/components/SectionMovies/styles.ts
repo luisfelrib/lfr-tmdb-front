@@ -27,7 +27,7 @@ export const Container = styled.div`
     border: 0;
 
     svg {
-      width: 40px;
+      width: 100px;
       height: 40px;
       color: ${({ theme }) => theme.colors.primary};
     }
@@ -36,7 +36,7 @@ export const Container = styled.div`
 
     &:hover {
       svg {
-        width: 45px;
+        width: 150px;
         height: 45px;
       }
     }
