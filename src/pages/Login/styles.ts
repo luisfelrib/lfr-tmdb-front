@@ -8,4 +8,19 @@ export const Error = styled.div`
   margin: 0 0 16px;
   color: white;
   padding: 15px 20px;
+  position: absolute;
+  top: 0;
+  left: 62em;
+`;
+
+export const Success = styled.div`
+  background: green;
+  border-radius: 4px;
+  font-size: 14px;
+  margin: 0 0 16px;
+  color: white;
+  padding: 15px 20px;
+  position: absolute;
+  top: 0;
+  left: 62em;
 `;

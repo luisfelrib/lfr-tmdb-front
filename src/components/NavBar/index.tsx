@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FaCaretDown } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import LogoNetflix from '../../assets/logo.png';
 
-import { Container, RoutesMenu, Profile, Text } from './styles';
+import { Container, RoutesMenu, Profile, Text, Button } from './styles';
 import * as AuthService from '../../services/auth';
 
 interface User {
@@ -15,7 +14,10 @@ interface Session {
   accessToken: string;
   user: User;
 }
-const NavBar: React.FC = () => {
+interface NavbarProps {
+  login: boolean;
+}
+const NavBar: React.FC<NavbarProps> = ({ login }) => {
   const [currentUser, setCurrentUser] = useState<Session | undefined>(
     undefined,
   );
@@ -50,29 +52,28 @@ const NavBar: React.FC = () => {
           <li style={{ fontWeight: 'bold' }}>
             <Link to="/">Inicio</Link>
           </li>
-          {currentUser && (
-            <li>
-              <Link to="/mylist">Minha Lista</Link>
-            </li>
-          )}
+          <li>{(!login && <Link to="/mylist">Minha Lista</Link>) || ''}</li>
         </ul>
       </RoutesMenu>
-      <Profile>
-        <button type="button">
-          {(currentUser && (
-            <>
-              <Text>
-                Olá, <strong>{currentUser.user.name}</strong>
-              </Text>
-              <FaCaretDown />{' '}
-            </>
-          )) || (
-            <strong>
-              <Link to="/login">Entrar</Link>
-            </strong>
-          )}
-        </button>
-      </Profile>
+      {(!login && (
+        <Profile>
+          <div>
+            {(currentUser && (
+              <>
+                <Text>
+                  Olá, <strong>{currentUser.user.name}</strong>
+                </Text>
+                <Button onClick={() => logOut()}>Sair</Button>
+              </>
+            )) || (
+              <strong>
+                <Link to="/login">Entrar</Link>
+              </strong>
+            )}
+          </div>
+        </Profile>
+      )) ||
+        ''}
     </Container>
   );
 };

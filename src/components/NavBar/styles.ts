@@ -78,7 +78,7 @@ export const Profile = styled.div`
     margin-right: 30px;
   }
 
-  button {
+  div {
     display: flex;
     align-items: center;
     background: transparent;
@@ -109,4 +109,15 @@ export const Profile = styled.div`
       margin-right: 18px;
     }
   `}
+`;
+export const Button = styled.button`
+  background: #e50914;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 6px;
+  border: 0;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
 `;

@@ -4,12 +4,12 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-// import SignFormError from '../../components/SignForm/SignFormError';
 import SignForm from '../../components/SignForm';
 import { Container, Error } from './styles';
 import * as AuthService from '../../services/auth';
+import NavBar from '../../components/NavBar';
 /* ---> Component <---*/
-const SigninPage = () => {
+const SigninPage: React.FC = () => {
   const [emailAddress, setEmailAddress] = useState('');
   const [pass, setPass] = useState('');
   const [error, setError] = useState('');
@@ -24,6 +24,9 @@ const SigninPage = () => {
         })
         .catch((error: any) => {
           setError('Erro ao realizar login');
+          setTimeout(() => {
+            setError('');
+          }, 2000);
           console.log(error);
         });
     }
@@ -32,6 +35,7 @@ const SigninPage = () => {
   return (
     <>
       <Container>
+        <NavBar login />
         {error && <Error>{error}</Error>}
         <SignForm
           handleSubmit={handleSubmit}

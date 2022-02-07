@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from './api';
 import authHeader from './authHeader';
 
@@ -10,7 +11,7 @@ interface MyListItemProps {
   type: string;
 }
 export const getMyList = (): any => {
-  return api.get('/user/mylist');
+  return api.get('/user/mylist', { headers: authHeader() });
 };
 export const AddToMyList = (item: MyListItemProps): any => {
   return api.post('/user/mylist', item, { headers: authHeader() });

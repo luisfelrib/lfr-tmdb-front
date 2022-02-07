@@ -23,9 +23,14 @@ interface MovieProps {
 interface SectionMoviesProps {
   movies: MovieProps[];
   name: string;
+  handleAdd: any;
 }
 
-const SectionMovies: React.FC<SectionMoviesProps> = ({ name, movies }) => {
+const SectionMovies: React.FC<SectionMoviesProps> = ({
+  name,
+  movies,
+  handleAdd,
+}) => {
   const [marginContent, setMarginContent] = useState(0);
 
   const MAX_WIDTH_CONTENT = useMemo(() => movies.length * 220, [movies]);
@@ -65,7 +70,10 @@ const SectionMovies: React.FC<SectionMoviesProps> = ({ name, movies }) => {
               <p>{movie.title}</p>
               <p>Ano de Lançamento:</p>
               <strong>{movie.release_date.split('-')[0]}</strong>
-              <MovieCardControll title="Adicionar a minha lista">
+              <MovieCardControll
+                title="Adicionar a minha lista"
+                onClick={() => handleAdd(movie)}
+              >
                 <span>
                   <FaPlus />
                 </span>
