@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import SectionMovies from '../../components/SectionMovies';
 
@@ -26,17 +26,6 @@ interface SectionsMoviesProps {
   movies: MovieProps[];
 }
 
-interface User {
-  id: BigInteger;
-  name: string;
-  email: string;
-}
-
-interface Session {
-  accessToken: string;
-  user: User;
-}
-
 const Home: React.FC = () => {
   const [sectionsMovies, setSectionsMovies] = useState<SectionsMoviesProps[]>(
     [],
@@ -44,9 +33,7 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [currentUser, setCurrentUser] = useState<Session | undefined>(
-    undefined,
-  );
+  const history = useHistory();
 
   const apiRoutes: { name: string; route: string }[] = [
     { name: 'Filmes da semana', route: '/movie' },
@@ -54,10 +41,6 @@ const Home: React.FC = () => {
   ];
 
   useEffect(() => {
-    const user = AuthService.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
-    }
     const urlsAxios = apiRoutes.map(({ route }) => {
       return api.get(route);
     });
@@ -81,7 +64,8 @@ const Home: React.FC = () => {
   }, [apiRoutes, sectionsMovies]);
 
   const handleAdd = (item: MovieProps): void => {
-    if (currentUser) {
+    const user = AuthService.getCurrentUser();
+    if (user) {
       const itemToAdd = {
         tmdbId: item.id,
         title: item.title,
@@ -119,6 +103,10 @@ const Home: React.FC = () => {
     }, 2000);
   };
 
+  const handleClick = (item: MovieProps): void => {
+    history.push(`/details/${item.type}/${item.id}`);
+  };
+
   return (
     <Container>
       {success && <Success>{success}</Success>}
@@ -139,6 +127,7 @@ const Home: React.FC = () => {
                 {...sectionMovie}
                 key={sectionMovie.id}
                 handleAdd={handleAdd}
+                handleClick={handleClick}
               />
             ))}
           </div>

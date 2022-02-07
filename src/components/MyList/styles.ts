@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import media from 'styled-media-query';
 
+export const Image = styled.img``;
 export const Container = styled.div`
   display: flex;
   padding: 40px 40px 0;

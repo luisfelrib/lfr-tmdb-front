@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import MyList from '../../components/MyList';
 import * as AuthService from '../../services/auth';
@@ -22,14 +22,14 @@ interface ListItem {
 const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [myList, setMylist] = useState<Array<ListItem>>([]);
-  const [currentUser, setCurrentUser] = useState<any>({});
+  const history = useHistory();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (!user) {
+      history.push('/login');
       return;
     }
-    setCurrentUser(user);
     UserService.getMyList()
       .then((response: any) => {
         console.log(response);
@@ -39,33 +39,35 @@ const Home: React.FC = () => {
       .catch((errors: any) => {
         console.log(errors);
       });
-  }, []);
+  }, [history]);
 
   const handleRemove = (id: BigInt): void => {
     console.log(id);
   };
 
+  const handleClick = (item: ListItem): void => {
+    history.push(`/details/${item.type}/${item.tmdbId}`);
+  };
+
   return (
     <Container>
-      <NavBar login />
-      {currentUser ? (
-        <Redirect to="/login" />
+      <NavBar login={false} />
+      {loading ? (
+        <Loading>
+          <div>
+            <span />
+            <strong>LFR</strong>
+          </div>
+        </Loading>
       ) : (
         <>
-          {loading ? (
-            <Loading>
-              <div>
-                <span />
-                <strong>LFR</strong>
-              </div>
-            </Loading>
-          ) : (
-            <>
-              <div style={{ marginTop: 50 }}>
-                <MyList myList={myList} handleRemove={handleRemove} />
-              </div>
-            </>
-          )}
+          <div style={{ marginTop: 50 }}>
+            <MyList
+              myList={myList}
+              handleRemove={handleRemove}
+              handleClick={handleClick}
+            />
+          </div>
         </>
       )}
     </Container>

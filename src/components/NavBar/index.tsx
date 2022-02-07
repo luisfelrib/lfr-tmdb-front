@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import LogoNetflix from '../../assets/logo.png';
 
 import { Container, RoutesMenu, Profile, Text, Button } from './styles';
@@ -21,6 +21,7 @@ const NavBar: React.FC<NavbarProps> = ({ login }) => {
   const [currentUser, setCurrentUser] = useState<Session | undefined>(
     undefined,
   );
+  const history = useHistory();
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
@@ -30,6 +31,7 @@ const NavBar: React.FC<NavbarProps> = ({ login }) => {
   const logOut = (): void => {
     AuthService.logout();
     setCurrentUser(undefined);
+    history.push('/login');
   };
   const [isBlack, setIsBlack] = useState(false);
 

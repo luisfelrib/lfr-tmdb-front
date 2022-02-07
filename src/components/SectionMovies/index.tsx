@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useMemo, useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaPlus } from 'react-icons/fa';
 
@@ -9,6 +10,8 @@ import {
   MovieCardControll,
   ButtonLetf,
   ButtonRight,
+  Image,
+  Detail,
 } from './styles';
 
 interface MovieProps {
@@ -24,12 +27,14 @@ interface SectionMoviesProps {
   movies: MovieProps[];
   name: string;
   handleAdd: any;
+  handleClick: any;
 }
 
 const SectionMovies: React.FC<SectionMoviesProps> = ({
   name,
   movies,
   handleAdd,
+  handleClick,
 }) => {
   const [marginContent, setMarginContent] = useState(0);
 
@@ -62,14 +67,18 @@ const SectionMovies: React.FC<SectionMoviesProps> = ({
       >
         {movies.map(movie => (
           <Movie key={movie.id}>
-            <img
+            <Image
+              onClick={() => handleClick(movie)}
               src={movie.poster_path}
               alt={`Capa do filme/seriado ${movie.title}`}
             />
             <MovieCard>
-              <p>{movie.title}</p>
-              <p>Ano de Lançamento:</p>
-              <strong>{movie.release_date.split('-')[0]}</strong>
+              <Detail onClick={() => handleClick(movie)}>
+                <p>{movie.title}</p>
+                <p>Ano de Lançamento:</p>
+                <strong>{movie.release_date.split('-')[0]}</strong>
+              </Detail>
+
               <MovieCardControll
                 title="Adicionar a minha lista"
                 onClick={() => handleAdd(movie)}

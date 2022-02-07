@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import media from 'styled-media-query';
 
+export const Image = styled.img``;
+export const Detail = styled.div``;
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,7 +29,7 @@ export const Container = styled.div`
     border: 0;
 
     svg {
-      width: 100px;
+      width: 50px;
       height: 40px;
       color: ${({ theme }) => theme.colors.primary};
     }
@@ -36,7 +38,7 @@ export const Container = styled.div`
 
     &:hover {
       svg {
-        width: 150px;
+        width: 80px;
         height: 45px;
       }
     }

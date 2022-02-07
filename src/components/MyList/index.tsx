@@ -2,7 +2,13 @@
 import React from 'react';
 import { FaMinus } from 'react-icons/fa';
 
-import { Container, Movie, MovieCard, MovieCardControll } from './styles';
+import {
+  Container,
+  Movie,
+  MovieCard,
+  MovieCardControll,
+  Image,
+} from './styles';
 
 interface ListItem {
   id: string;
@@ -16,15 +22,17 @@ interface ListItem {
 
 interface List {
   handleRemove: any;
+  handleClick: any;
   myList: ListItem[];
 }
 
-const MyList: React.FC<List> = ({ myList, handleRemove }) => {
+const MyList: React.FC<List> = ({ myList, handleRemove, handleClick }) => {
   return (
     <Container>
       {myList.map(movie => (
         <Movie key={movie.id}>
-          <img
+          <Image
+            onClick={() => handleClick(movie)}
             src={movie.poster_path}
             alt={`Capa do filme/seriado ${movie.title}`}
           />
