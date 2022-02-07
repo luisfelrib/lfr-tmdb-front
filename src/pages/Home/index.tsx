@@ -41,11 +41,10 @@ const Home: React.FC = () => {
   ];
 
   useEffect(() => {
-    const urlsAxios = apiRoutes.map(({ route }) => {
-      return api.get(route);
-    });
-
-    if (sectionsMovies.length === 0) {
+    if (loading && sectionsMovies.length === 0) {
+      const urlsAxios = apiRoutes.map(({ route }) => {
+        return api.get(route);
+      });
       Promise.all([...urlsAxios])
         .then(responses => {
           const responsesApi = responses.map((response, index) => ({
@@ -57,11 +56,11 @@ const Home: React.FC = () => {
           setSectionsMovies(responsesApi);
           setLoading(false);
         })
-        .catch(errors => {
+        .catch(() => {
           // console.log(errors);
         });
     }
-  }, [apiRoutes, sectionsMovies]);
+  }, [sectionsMovies, apiRoutes, loading]);
 
   const handleAdd = (item: MovieProps): void => {
     const user = AuthService.getCurrentUser();

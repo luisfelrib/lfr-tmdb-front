@@ -21,7 +21,7 @@ interface ListItem {
 
 const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [myList, setMylist] = useState<Array<ListItem>>([]);
+  const [myList, setMylist] = useState<ListItem[]>([]);
   const history = useHistory();
 
   useEffect(() => {
