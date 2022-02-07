@@ -15,7 +15,7 @@ const Details: React.FC = () => {
   const { type, id } = useParams<{ id?: string; type?: string }>();
 
   useEffect(() => {
-    console.log(type, id);
+    // console.log(type, id);
     if (type && id) {
       const apiType = type === 'tv' ? 'tv-show' : type;
       api
@@ -25,7 +25,7 @@ const Details: React.FC = () => {
           setItem(response.data);
         })
         .catch((errors: any) => {
-          console.log(errors);
+          // console.log(errors);
         });
     }
   }, [type, id]);

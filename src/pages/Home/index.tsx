@@ -58,7 +58,7 @@ const Home: React.FC = () => {
           setLoading(false);
         })
         .catch(errors => {
-          console.log(errors);
+          // console.log(errors);
         });
     }
   }, [apiRoutes, sectionsMovies]);
@@ -74,15 +74,16 @@ const Home: React.FC = () => {
         type: item.type,
       };
       UserService.AddToMyList(itemToAdd)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then((response: any) => {
-          console.log(response);
+          // console.log(response);
           setSuccess('Item adicionado a sua lista');
           setTimeout(() => {
             setSuccess('');
           }, 2000);
         })
         .catch((errors: any) => {
-          console.log(errors);
+          // console.log(errors);
           if (errors.response && errors.response.data) {
             const message = errors.response.data.message
               ? errors.response.data.message

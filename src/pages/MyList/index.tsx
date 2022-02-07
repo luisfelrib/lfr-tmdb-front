@@ -32,17 +32,19 @@ const Home: React.FC = () => {
     }
     UserService.getMyList()
       .then((response: any) => {
-        console.log(response);
+        // console.log(response);
         setMylist(response.data);
         setLoading(false);
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((errors: any) => {
-        console.log(errors);
+        // console.log(errors);
       });
   }, [history]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleRemove = (id: BigInt): void => {
-    console.log(id);
+    // console.log(id);
   };
 
   const handleClick = (item: ListItem): void => {

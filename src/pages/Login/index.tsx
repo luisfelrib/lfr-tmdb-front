@@ -22,12 +22,13 @@ const SigninPage: React.FC = () => {
         .then(() => {
           history.push('/');
         })
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .catch((error: any) => {
           setError('Erro ao realizar login');
           setTimeout(() => {
             setError('');
           }, 2000);
-          console.log(error);
+          // console.log(error);
         });
     }
   };
